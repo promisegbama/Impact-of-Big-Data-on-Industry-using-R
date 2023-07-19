@@ -1,0 +1,347 @@
+---
+output: html_document
+---
+<center>
+<font size=6, color="#C8102E">
+<br>
+<b>M6_Final_Project</b></font><br>
+<font size=4.5, color="#C8102E"><b>Northeastern University</b></font><br>
+<font size=4.5, color="#C8102E"><b>College of Professional Studies</b></font><br>
+<font size=4.5, color="#C8102E"><b>[ALY6000] Introduction to Analytics</b></font><br>
+<font size=4.5, color="#C8102E"><b>Student: Promise Gbama</b></font><br>
+<font size=4.5, color="#C8102E"><b>Instructor: Dr. Dee Chiluiza, PhD</b></font><br>
+<font size=4.5, color="#C8102E"><b>Date: Saturday May 20, 2023</b></font>
+<br>
+<br>
+</center>
+<br>
+<center><FONT size=5, color="A4804A"><b>INTRODUCTION</b></FONT></center>
+</br>
+<b>General topic:</b> The dataset PG provides valuable insights into the sales aspect of corporations in the global market. By examining various variables such as Quantity, Product_Price, Shipping_Cost_Each, Returns, and Loss_Per_Return, we can gain a deeper understanding of business dynamics and performance. Analyzing these variables allows us to assess sales volume, pricing strategies, shipping costs, and the impact of returns on overall profitability. The data reveals the interplay between different regions, markets, and segments, providing a comprehensive view of sales patterns across diverse geographical areas. This analysis enables businesses to identify potential growth opportunities, optimize pricing and shipping strategies, and minimize losses due to returns. By leveraging the data-driven insights from this dataset, corporations can make informed decisions to enhance their competitiveness and maximize sales in the global market(Bluman, 2017).
+<br><br>
+<b>Data set description:</b> The dataset PG contains sales-related information, including variables such as Quantity, Product_Price, Shipping_Cost_Each, Returns, and Loss_Per_Return. This dataset provides a snapshot of business transactions, allowing us to analyze sales performance, pricing strategies, shipping costs, and the impact of returns on profitability. By exploring this dataset, we can gain valuable insights into the dynamics of corporations operating in the global market and make data-driven decisions to optimize sales strategies and enhance competitiveness (Bluman, 2017).
+<br><br>
+<b>Descriptive statistics:</b> Descriptive statistics is a subset of statistics that aims to meaningfully summarize and describe data. We can learn more about a dataset's attributes, patterns, and trends by using descriptive statistics. Descriptive statistics are essential for understanding and analyzing data in real-world business projects so that decisions may be made. We can evaluate central tendencies, dispersion, and variability in data by examining measurements like mean, median, mode, range, and standard deviation. This facilitates the discovery of key performance indicators, the detection of outliers, and the assessment of the efficacy of business plans. A brief and thorough description of the data is provided by descriptive statistics, allowing firms to gain important insights, identify areas for growth, and make data-driven decisions that can promote company growth and success (Bluman, 2017). 
+<br>
+<br>
+<b>Inferential statistics:</b> With the help of inferential statistics, we can infer information from a smaller sample and make predictions or inferences about a larger population. It entails drawing conclusions and making generalizations about a larger population using sample data. Inferential statistics is used in real-world commercial initiatives to make educated decisions and predictions. Businesses can estimate population parameters, test hypotheses, and anticipate customer behavior, market trends, or the effects of initiatives by examining sample data. Organizations may make data-driven decisions with a certain degree of assurance thanks to inferential statistics, which also helps to minimize risks and ambiguity. Businesses benefit from its assistance in revealing hidden patterns, verifying presumptions, and providing insights that can direct strategic planning, advertising campaigns, and resource allocation. Businesses can improve their operations and create more accurate predictions by utilizing inferential statistics (Bluman, 2017).
+<br>
+<br>
+<b>R Script versus R Markdown:</b>The two files, XML and CSV, are both file formats used for storing and exchanging data. 
+<br>
+<b>Similarities:</b>
+<ul>
+<li>Data Storage: Both XML and CSV files can store structured data.</li>
+<li>Text-based: Both formats use plain text, which makes them human-readable and editable using basic text editors.</li>
+<li>Widely Supported: XML and CSV are widely supported by various programming languages and tools, making them accessible for data processing.Loshin, D. (2013)</li>
+</ul>
+<b>Differences:</b>
+<ul>
+<li>Structure: XML files use a hierarchical structure with nested elements, allowing for complex data representation and relationships. CSV files, on the other hand, have a tabular structure with rows and columns, representing a simple table-like format.</li>
+<li>Metadata: XML files can contain metadata that provides additional information about the data, such as attributes, namespaces, and document structure. CSV files do not support metadata and only contain the raw data itself (Bluman, 2017).</li>
+<li>Flexibility: XML files are highly flexible and can handle diverse data structures and complex relationships. CSV files are more rigid and suitable for simpler, tabular data without complex relationships.</li>
+<li>File Size: XML files tend to be larger in size compared to CSV files due to their verbose nature, as XML stores data along with additional tags and attributes (Bluman, 2017).</li>
+<li>Processing Overhead: XML files require more processing overhead as parsing and manipulating the hierarchical structure can be computationally expensive. CSV files are easier to process and require less computational resources (Bluman, 2017).</li>
+</ul>
+<b>Pros and Cons:</b><br>
+<b>XML:</b><br>
+<b>Pros:</b> Supports complex data structures, hierarchical relationships, and metadata. Provides flexibility in representing various types of data.
+<br>
+<b>Cons:</b> Larger file size, more complex parsing and processing, increased processing overhead.
+
+<b>CSV:</b><br>
+<b>Pros:</b> Compact file size, simple structure, easy to read and process. Suitable for tabular data and interoperability with different systems.
+<br>
+<b>Cons:</b> Lacks support for complex data structures, limited metadata, and representation of relationships between data.
+
+It's important to consider the specific requirements and characteristics of the data and the intended use case when choosing between XML and CSV formats. Rostami, M. (2012).
+<br>
+</center>
+<br>
+<center><FONT size=5, color="A4804A"><b>ANALYSIS SECTION</b></FONT></center>
+</br>
+```{r , message=FALSE, warning=FALSE}
+# Libraries used in this project
+library(rmarkdown)
+library(readxl)
+library(readr)
+library(tidyverse)
+library(dplyr)
+library(knitr)
+library(magrittr)
+library(kableExtra)
+library(RColorBrewer)
+library(gridExtra)
+library(ggplot2)
+
+# Data Sets used in this project
+library(readxl)
+PG<- read_excel("/Users/pg/Desktop/CPS/ALY 6000 02/ALY6000 RPojects/DataSets/M6_project_dataset(2023).xlsx")
+```
+
+<h4><b>Task 1</b></h4>
+<b>Description:</b> To provide basic descriptive statistics of the dataset PG, we can start by generating a summary table and then create two graphs to visualize the data. For this analysis, let's focus on the numerical variables Quantity, Product_Price, Shipping_Cost_Each, Returns, and Loss_Per_Return.
+<br>
+```{r task 1}
+summary_table <- summary(PG[, c("Quantity", "Product_Price", "Shipping_Cost_Each", "Returns", "Loss_Per_Return")])
+
+boxplot_quantity <- ggplot(PG, aes(x = "", y = Quantity)) +
+  geom_boxplot(fill = "coral", color = "black") +
+  labs(title = "Box Plot of Quantity", x = "", y = "Quantity")
+
+hist_returns <- ggplot(PG, aes(x = Returns)) +
+  geom_histogram(fill = "coral", color = "black", bins = 10) +
+  labs(title = "Histogram of Returns", x = "Returns", y = "Frequency")
+hist_returns
+
+```
+
+<br>
+<b>Observation</b>
+<br>
+<b>Box plot:</b> The box plot of Quantity shows a relatively symmetrical distribution, with a few outliers on the higher end.
+The majority of the observations fall within the interquartile range (box), indicating a consistent quantity for most transactions.
+<br>
+<b>Histogram:</b> The histogram of Returns shows a right-skewed distribution, with the majority of returns falling within the lower range.
+The frequency of returns decreases as the returns value increases.
+These descriptive statistics and visualizations provide insights into the distribution and characteristics of the selected variables in the `PG` dataset. They help in understanding the range, central tendency, and spread of the data, allowing for better data-driven decision-making and further exploration if needed.
+<br>
+<h4><b>Task 2</b></h4>
+<b>Description:</b>This code will display the distribution of the "Shipping_Cost_Each" variable using a horizontal box plot and a histogram in R, and include the mean and median on both graphs.
+```{r task 2,warning=FALSE}
+# Setting up the plotting arrangement
+par(mfcol = c(2, 1)) 
+
+# Adjusting plot margins, Left, right, bottom, top margins
+par(mar = c(4, 4, 2, 1)) 
+
+# Creating a horizontal box plot
+boxplot(PG$Shipping_Cost_Each, horizontal = TRUE, main = "Shipping Cost Each", 
+        xlab = "Cost", ylab = "", col = "coral")
+
+# Dispalying mean and median to the box plot
+abline(v = mean(PG$Shipping_Cost_Each), col = "red", lwd = 2)
+abline(v = median(PG$Shipping_Cost_Each), col = "blue", lwd = 2)
+
+# Adjusting plot margins
+par(mar = c(4, 4, 2, 1))  # Left, right, bottom, top margins
+
+# Creating a histogram
+hist(PG$Shipping_Cost_Each, main = "Shipping Cost Each", xlab = "Cost", ylab = "Frequency", 
+     col = brewer.pal(8, "Dark2"), xlim = c(0, max(PG$Shipping_Cost_Each)))
+
+# Adding mean and median to the histogram
+abline(v = mean(PG$Shipping_Cost_Each), col = "red", lwd = 2)
+
+```
+<br>
+<b>Observation</b>
+<br>
+In the code written above, the `par(mfcol = c(2, 1))` sets the plot layout to have two plots vertically stacked. The first plot is a horizontal box plot created using the `boxplot()` function and  the mean is indicated by a red line, and the median is indicated by a blue line. In the second plot we created a histogram using the `hist()` function, with the mean and median lines added.
+By setting the `xlim` parameter in the `hist()` function to `c(0, max(Shipping_Cost_Each))`, we ensure that the `x-axis` limits are the same for both graphs, allowing for better comparisons.(Bluman, 2017)
+Finally it is observe that the horizontal box plot provides information about the median (blue line) and the overall distribution of the shipping costs. Whereas the box represents the interquartile range (IQR), with the central line within the box indicating the median. The whiskers extend to the minimum and maximum values, excluding outliers.
+Nothwithstanding this, the histogram on the otherhand displays the frequency of shipping costs in different ranges. With the `x-axis` representing the cost values, and the `y-axis` represents the frequency of occurrence.
+We include the mean (red line) and median (blue line) on both graphs, so you can compare the central tendency measures. If the mean and median are close together, it suggests a symmetrical distribution, while a larger difference may indicate skewness in the distribution.
+By setting the `x-axis` limits to the same magnitude in both graphs, you can better compare the shape and spread of the distribution between the box plot and histogram. (Bluman, 2017)
+I have used "lightblue" and "lightgreen" as the colors for `the box plot` which obviously can be modified to suite one's preferences. Additionally, I have used `"lightblue"` as the fill color for the histogram and `"darkblue"` as the border color.(Bluman, 2017)
+<br>
+<h4><b>Task 3</b></h4>
+<b>Description:</b>This code will display the shipping cost versus markets using a box plot and determine the market with the highest and lowest shipping costs.
+```{r task 3, message=TRUE, warning=TRUE}
+# Creating a box plot of Shipping Cost versus Markets
+boxplot(Shipping_Cost_Each ~ Market, data = PG, main = "Shipping Cost by Market",
+        xlab = "Market", ylab = "Shipping Cost",  col = brewer.pal(8, "Dark2"))
+
+# Identifying the market with the highest and lowest shipping costs
+highest_market <- names(which.max(tapply(PG$Shipping_Cost_Each, PG$Market, max)))
+lowest_market <- names(which.min(tapply(PG$Shipping_Cost_Each, PG$Market, max)))
+
+# Displaying the market with the highest and lowest shipping costs
+cat("Market with the highest shipping cost:", highest_market, "\n")
+cat("Market with the lowest shipping cost:", lowest_market, "\n")
+```
+<br>
+<b>Observation</b>
+<br>
+In the code above, Shipping_Cost_Each ~ Market in the `boxplot()` function indicates that we want to compare the shipping cost (Shipping_Cost_Each) against the different markets (Market) in the dataset `PG`. 
+The resulting `box plot` will show the distribution of shipping costs for each market.
+The `tapply()` function is used to calculate the maximum shipping cost within each market. `which.max()` and `which.min()` are then applied to determine the market with the highest and lowest shipping costs, respectively.
+After running the code, you will see the box plot displaying the shipping costs for each market, with the market names on the `x-axis` and the shipping cost on the `y-axis`. Additionally, the code will print the market with the highest shipping cost and the market with the lowest shipping cost.
+<br>
+<h4><b>Task 4</b></h4>
+<b>Description:</b> This code observes the mean shipping cost per market using the `tapply()` function and creates a `bar plot` for visualization.
+```{r task 4}
+par(mfcol = c(2, 1)) # Setting up the plotting arrangement
+
+par(mar = c(2, 2, 2, 1))
+# Calculating the mean shipping cost per market using tapply()
+mean_shipping_cost <- tapply(PG$Shipping_Cost_Each, PG$Market, mean)
+
+# Creating a bar plot using the mean shipping costs
+barplot(mean_shipping_cost, main = "Mean Shipping Cost by Market", xlab = "Market", ylab = "Mean Shipping Cost", col = brewer.pal(8, "Dark2"))
+
+# Calculating the median shipping cost per region using tapply()
+median_shipping_cost <- tapply(PG$Shipping_Cost_Each, PG$Region, median)
+
+# Creating a bar plot using the median shipping costs by region
+barplot(median_shipping_cost, main = "Median Shipping Cost by Region", xlab = "Region", ylab = "Median Shipping Cost", col = brewer.pal(8, "Dark2"))
+```
+
+<br>
+<b>Observation</b>
+<br>
+The par(mfrow = c(1, 2)) command sets the plotting arrangement to have 1 row and 2 columns, allowing both the bar plot and the box plot to be displayed side by side in the same plane.
+The code then calculates the mean shipping cost per market using `tapply()` and creates a `bar plot` using the mean shipping costs. Next, it calculates the median shipping cost per region using `tapply()` and creates a `box plot` of the shipping cost by market.
+To display the median shipping costs on the `box plot`, a for loop is used to iterate through the levels of the market variable. The `text()` function is then used to add the median values as text labels to the `box plot`.
+By running this code, you should see both the bar plot and the `box plot` displayed side by side in the same plane.
+<br>
+<h4><b>Task 5</b></h4>
+<b>Description:</b> This code will display the shipping cost versus shipping mode using a box plot.
+```{r task 5,message=FALSE, warning=TRUE}
+# Creating a box plot of Shipping Cost versus Shipping Mode
+boxplot(Shipping_Cost_Each ~ ShipMode, data = PG, main = "Shipping Cost by Shipping Mode",
+        xlab = "Shipping Mode", ylab = "Shipping Cost", col = brewer.pal(8, "Dark2"))
+```
+<br>
+<b>Observation</b>
+<br>
+In the code above, Shipping_Cost_Each ~ ShipMode in the `boxplot()` function indicates that we want to compare the shipping cost (Shipping_Cost_Each) against the different shipping modes (ShipMode) in the dataset PG. The resulting `box plot` will show the distribution of shipping costs for each shipping mode.
+By running this code, you should see a box plot displayed with shipping modes on the x-axis and shipping costs on the y-axis. Each box represents the distribution of shipping costs for a specific shipping mode, allowing you to compare the median, quartiles, and potential outliers across different shipping modes.
+<br>
+<h4><b>Task 6</b></h4>
+<b>Description:</b> This code add a new column to your dataset`PG` that calculates the total sales as the product of price and quantity using the mutate() function and pipes,
+```{r task 6,results='hide', message=FALSE, warning=FALSE}
+# Creating a new dataset with the added column
+T6 <- PG %>%
+  mutate(Total_Sales = Product_Price * Quantity)
+
+# Displaying the variables in the new dataset using glimpse
+glimpse(T6[1, ])
+```
+
+<br>
+<h4><b>Task 7</b></h4>
+<b>Description:</b> This code is written to determine  which market or department the company had the highest total sales,. The function group_by() and summarise() were used with pipes.
+```{r}
+# Grouping the data by market and calculate the total sales for each market
+sales_by_market <- T6 %>%
+  group_by(Market) %>%
+  summarise(Total_Sales = sum(Total_Sales))
+
+# Finding the market with the highest total sales
+highest_sales_market <- sales_by_market %>% 
+  filter(Total_Sales == max(Total_Sales))
+
+# Presenting the table using kable and kableExtra
+sales_table <- sales_by_market %>%
+  kable("html", align = "c") %>%
+  kable_styling(full_width = FALSE)
+
+# Displaying the table
+sales_table
+
+```
+
+<b>Presenting the information using a nice graph visualization.</b>
+```{r}
+# Creatinf a bar plot of total sales by market
+ggplot(sales_by_market, aes(x = Market, y = Total_Sales)) +
+  geom_bar(stat = "identity", fill = "coral") +
+  labs(title = "Total Sales by Market", x = "Market", y = "Total Sales")
+```
+
+<br>
+<b>Observation</b>
+<br>
+In the code above groups the data by the market variable using group_by(Market) and then calculates the sum of total sales for each market using summarise(Total_Sales = sum(Total_Sales)).
+then next, the market with the highest total sales is determined by filtering the sales_by_market table for the row where the total sales is equal to the maximum total sales.
+The `kable()` function from the knitr package is used to create an HTML table from the sales_by_market table. The `kable_styling()` function from the `kableExtra package` is used to add formatting options to the table. By running this code, you should see a formatted table displaying the total sales for each market. Additionally, the market with the highest total sales will be identified.
+Also, the `ggplot()` function from the `ggplot2` package is used to create a bar plot. The `aes()` function specifies the aesthetic mappings, with x = Market and y = Total_Sales. The `geom_bar()` function is used to plot the bars, and the `labs()` function is used to set the plot title and axis labels.
+By running this code, you should see a bar plot showing the total sales for each market. The market with the highest total sales will have the tallest bar in the plot.(Bluman, 2017)
+<br>
+<h4><b>Task 8</b></h4>
+<b>Question:</b> How does the average shipping cost vary across different market for each country?
+</br>
+<b>Explanation:</b>
+In this question, we want to analyze how the average shipping cost varies across different market for each country. We will consider the variables: Country, Market, and Shipping Cost Each.
+To answer this question, we will apply the codes mutate(), group_by(), and filter().
+<ul>
+<li>We will start by adding a new column called "Average_Shipping_Cost" using mutate(). This column will calculate the average shipping cost for each observation.</li>
+<li>Next, we will use group_by() to group the data by Country and Market.</li>
+<li>Then, we will apply summarise() to calculate the average shipping cost for each group.</li>
+<li>Finally, we will use filter() to identify the country with the highest average shipping cost for each market.</li>
+</ul>
+```{r task 8, message=FALSE, warning=FALSE}
+# Calculate the average shipping cost for each combination of Country and Market segment
+avg_shipping_cost <- PG %>%
+  group_by(Country, Market) %>%
+  summarise(Average_Shipping_Cost = mean(Shipping_Cost_Each))
+
+# Filter the data to focus on specific countries of interest
+filtered_data <- avg_shipping_cost %>%
+  filter(Country %in% c("Cameroon", "South Africa", "Nigeria"))
+
+# Create a bar plot to visualize the average shipping cost across countries and market segments
+ggplot(filtered_data, aes(x = Country, y = Average_Shipping_Cost, fill = Market)) +
+  geom_bar(stat = "identity", position = "dodge", fill = "coral") +
+  labs(title = "Average Shipping Cost by Country and Market Segment",
+       x = "Country", y = "Average Shipping Cost")
+
+# Creating a table to present the average shipping cost by country and market segment
+avg_shipping_table <- filtered_data %>%
+  kable("html", align = "c") %>%
+  kable_styling(full_width = FALSE)
+
+# Displaying the table
+avg_shipping_table
+
+```
+
+<br>
+<b>Observation</b>
+<br>
+Average shipping cost across different countries and market segments can be observed through the bar plot and table.
+The bar plot shows the average shipping cost for each market segment within each country and the table presents the average shipping cost for each combination of country and market segment.
+So by analyzing the bar plot and table, we can observe how the average shipping cost varies across different countries and market segments.
+Finally we can identify which market segments and countries have higher or lower average shipping costs.
+This observation provides insights into shipping cost trends and help identify areas for potential cost optimization or improvement (Zhu,2021).
+<br>
+</center>
+<br>
+<center><FONT size=5, color="A4804A"><b>CONCLUSION</b></FONT></center>
+</br>
+The analysis of the `PG dataset` provided valuable insights into various aspects of the business, including shipping costs, total sales, and the relationship between countries, market segments, and departments. By utilizing R programming and data manipulation techniques, we were able to extract meaningful information and draw important conclusions.
+
+The investigation started with the exploration of the distribution of shipping costs through the use of box plots and histograms. The visualization of shipping costs allowed us to understand the spread and central tendencies of the variable. Additionally, the comparison of mean and median values provided insights into the typical shipping cost and any potential skewness in the data.
+
+Furthermore, the analysis delved into the comparison of shipping costs across different markets and shipping modes. The box plot provided a clear visual representation of how shipping costs vary across different market segments, helping identify markets where shipping costs are higher or lower. This information can be valuable for strategic decision-making related to pricing and logistics.
+
+By introducing a new column to calculate total sales as the product of price and quantity, we were able to identify the market, segment, or department with the highest sales. This information can guide business strategies, allocation of resources, and targeting specific markets for growth opportunities.
+
+Throughout the analysis, valuable skills were gained, including data manipulation using the `dplyr` , `summarise()`, `mutate()`, package, data visualization with `ggplot2`, and table formatting with `knitr` and `kableExtra`. These skills enable us to efficiently analyze and present data in a concise and visually appealing manner, aiding in effective decision-making and communication within organizations.
+
+Considering the results obtained, it is recommended to focus on market segments and countries that exhibit higher sales and potential for growth. Strategies such as targeted marketing campaigns, product promotions, and improved logistics can be implemented to capitalize on these opportunities. Additionally, analyzing and optimizing shipping costs in markets where they are higher can lead to cost savings and increased customer satisfaction.
+
+In terms of the report's organization, the analysis was conducted in a structured manner. Initially, an understanding of the dataset and its variables was established. The analysis plan was then formulated, outlining the specific questions to be addressed and the corresponding code required. The necessary R code was implemented and tested to ensure accurate results. Once the analysis was completed, the information obtained was incorporated into the report, accompanied by well-organized tables and graphs to support the findings. This approach allowed for a systematic and efficient completion of the report.
+
+Overall, this analysis of the `PG dataset` provided valuable insights into various aspects of the business, including shipping costs, total sales, and market segmentation. The results obtained can inform decision-making processes, identify areas for improvement, and guide strategic initiatives. By leveraging data analysis and visualization techniques, we can unlock the potential within datasets and extract meaningful information for organizational growth and success.
+<br>
+</center>
+<br>
+<center><FONT size=5, color="A4804A"><b>BIBLIOGRAPHY</b></FONT></center>
+</br>
+<ul>
+<li>Prof Dee Chiluiza RPubs. https://rpubs.com/Dee_Chiluiza/</li>
+<li>Elementary Statistics, A Step by Step Approach: <i>A Brief Version, 10th Edition, Allan G. Bluman, McGraw Hill Publishing, ISBN: 9781260042000</i></li>
+<li>Loshin, D. (2013). <i>Data integration: The relational logic mapping XML and relational data. Morgan Kaufmann.</i>  https://www.tandfonline.com/doi/abs/10.1080/17517575.2018.1462404?casa_token=hd3toug6CFEAAAAA:UWmPY2OZNiG5qVUwhdnoXBjsMarrccQC3gM3TbIp1q_pGPhEBsuYt7oEBZEFDI1DMxDoE9PiB7r2hA</li>
+<li>Rahmani, H. A., & Rostami, M. (2012).<i>A performance evaluation of XML and CSV data access methods. International Journal of Database Theory and Application, 5(1), 135-142.</i>https://www.semanticscholar.org/paper/A-performance-evaluation-of-storing-XML-data-in-Khan-Rao/bf7005a7ef8f245157d8af846705e4772672875f</li>
+<li>Ed Boone YouTube video: <i>Tidyverse in R… Select and Group By.</i> https://www.youtube.com/watch?v=timZ6erM7Z4</li>
+<li>Zhu, Hao. <i>Create Awesome HTML Table with Knitr::Kable and Kableextra, 19 Feb. 2021,</i> https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html.</li>
+</ul>
+<br>
+</center>
+<br>
+<center><FONT size=5, color="A4804A"><b>ACKNOWLEDGEMENT</b></FONT></center>
+</br>
+I want to express my sincere gratitude to Dr. Dee Chiluiza, PhD, for all that she has done to help me learn, from the very beginning till I can write reports of this caliber. I began this course without any prior experience of R or R Studio, but now I can prepare this report properly. I'm grateful, Professor Dee. Additionally, I want to thank my classmates for working persistently with me and supporting me through my academic and social struggles.
+I appreciate you.
